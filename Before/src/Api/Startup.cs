@@ -35,8 +35,7 @@ namespace Api
             {
                 app.UseDeveloperExceptionPage();
             }
-
-            app.UseMvc();
+            
         }
     }
 }
