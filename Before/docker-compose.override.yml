@@ -1,0 +1,25 @@
+version: '3.4'
+
+services:
+  onlinetheatredb:
+    container_name: onlinetheatredb
+    ports:
+      - "1433:1433"
+    environment:
+      SA_PASSWORD: "0rder@Boards!"
+      ACCEPT_EULA: "Y"
+      
+  OnlineTheatreApi:
+    container_name: theatre.api
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionString:Server=onlinetheatredb;Database=onlinetheatredb;User Id=sa;Password=0rder@Boards!"
+    depends_on:
+      - onlinetheatredb
+    volumes:
+      - ~/.aspnet/https:/root/.aspnet/https:ro
+      - ~/.microsoft/usersecrets:/root/.microsoft/usersecrets:ro
+      - ASPNETCORE_HTTPS_PORT=443
+    ports:
+      - "8746:80"
+      - "8747:443"
